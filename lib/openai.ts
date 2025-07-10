@@ -30,14 +30,16 @@ Please provide a JSON response with the following structure:
   "risksAndRedFlags": "Any concerning clauses, unusual terms, or potential issues"
 }
 
-Focus on extracting factual information and identifying any potential red flags or unusual terms.`;
+Focus on extracting factual information and identifying any potential red flags or unusual terms.
+
+Only respond with the JSON object. Do not include any explanation or extra text.`;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4-turbo-preview",
+      model: "gpt-4-turbo",
       messages: [
         {
           role: "system",
-          content: "You are a legal assistant specializing in lease agreement analysis. Provide clear, structured responses in JSON format."
+          content: "You are a legal assistant specializing in lease agreement analysis. Only respond with the JSON object. Do not include any explanation or extra text."
         },
         {
           role: "user",
@@ -51,12 +53,17 @@ Focus on extracting factual information and identifying any potential red flags 
     if (!response) {
       throw new Error('No response from OpenAI');
     }
+    console.log("raw output", response);
 
     // Try to parse the response as JSON
     try {
-      return JSON.parse(response) as LeaseAnalysis;
+      const jsonStart = response.indexOf("{");
+      const jsonEnd = response.lastIndexOf("}");
+      const jsonString = response.substring(jsonStart, jsonEnd + 1);
+    
+      return JSON.parse(jsonString) as LeaseAnalysis;
     } catch (parseError) {
-      // If JSON parsing fails, return a structured response
+      console.warn("Failed to parse JSON from response:", response);
       return {
         partiesInvolved: "Unable to extract parties information",
         leaseDuration: "Unable to extract lease duration",
@@ -66,6 +73,19 @@ Focus on extracting factual information and identifying any potential red flags 
         risksAndRedFlags: "Unable to analyze risks and red flags"
       };
     }
+    // try {
+    //   return JSON.parse(response) as LeaseAnalysis;
+    // } catch (parseError) {
+    //   // If JSON parsing fails, return a structured response
+    //   return {
+    //     partiesInvolved: "Unable to extract parties information",
+    //     leaseDuration: "Unable to extract lease duration",
+    //     rentAndPaymentTerms: "Unable to extract rent and payment terms",
+    //     terminationClause: "Unable to extract termination clause",
+    //     securityDeposit: "Unable to extract security deposit information",
+    //     risksAndRedFlags: "Unable to analyze risks and red flags"
+    //   };
+    // }
   } catch (error) {
     console.error('Error calling OpenAI:', error);
     throw new Error('Failed to analyze lease with AI');

@@ -10,18 +10,18 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleUploadComplete = async (file: File) => {
+  const handleUploadComplete = async (fileUrl: string) => {
     setIsLoading(true);
     setError(null);
     
     try {
-      // Send to our analyze API
-      const formData = new FormData();
-      formData.append('file', file);
-
+      // Send the file URL to our analyze API
       const analyzeResponse = await fetch('/api/analyze', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fileUrl }),
       });
 
       if (!analyzeResponse.ok) {

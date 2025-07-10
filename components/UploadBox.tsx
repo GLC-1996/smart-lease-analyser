@@ -1,61 +1,50 @@
 'use client';
 
 import { useState } from 'react';
+import { UploadDropzone } from '@/utils/uploadthing';
+import { useRouter } from 'next/navigation';
 
 interface UploadBoxProps {
-  onUploadComplete: (file: File) => void;
+  onUploadComplete: (fileUrl: string) => void;
   onUploadError: (error: string) => void;
 }
 
 export default function UploadBox({ onUploadComplete, onUploadError }: UploadBoxProps) {
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    const file = files[0];
-    if (file.type !== 'application/pdf') {
-      onUploadError('Please upload a PDF file');
-      return;
+  const handleUploadComplete = async (res: any) => {
+    setIsUploading(false);
+    if (res && res[0] && res[0].url) {
+      onUploadComplete(res[0].url);
     }
+  };
 
-    setIsUploading(true);
-    try {
-      onUploadComplete(file);
-    } catch (error) {
-      onUploadError('Failed to process file');
-    } finally {
-      setIsUploading(false);
-    }
+  const handleUploadError = (error: Error) => {
+    setIsUploading(false);
+    onUploadError(error.message);
   };
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
-        <input
-          type="file"
-          accept=".pdf"
-          onChange={handleFileSelect}
-          className="hidden"
-          id="file-upload"
-          disabled={isUploading}
-        />
-        <label
-          htmlFor="file-upload"
-          className="cursor-pointer block"
-        >
-          <div className="space-y-4">
-            <div className="text-4xl">📄</div>
-            <div className="text-lg font-medium text-gray-900">
-              {isUploading ? 'Processing...' : 'Upload your lease agreement'}
-            </div>
-            <div className="text-sm text-gray-500">
-              {isUploading ? 'Please wait while we process your PDF...' : 'Click to select a PDF file'}
-            </div>
-          </div>
-        </label>
-      </div>
+      <UploadDropzone
+        endpoint="pdfUploader"
+        onClientUploadComplete={handleUploadComplete}
+        onUploadError={handleUploadError}
+        onUploadBegin={() => setIsUploading(true)}
+        config={{
+          mode: "auto",
+        }}
+        appearance={{
+          container: "border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors",
+          allowedContent: "text-sm text-gray-500",
+          button: "hidden",
+        }}
+      />
+      {isUploading && (
+        <div className="mt-4 text-center">
+          <div className="text-sm text-gray-500">Processing your PDF...</div>
+        </div>
+      )}
     </div>
   );
 } 

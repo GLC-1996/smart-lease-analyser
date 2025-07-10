@@ -4,26 +4,29 @@ import { analyzeLease } from '@/lib/openai';
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.formData();
-    const file = formData.get('file') as File;
+    const body = await request.json();
+    const { fileUrl } = body;
     
-    if (!file) {
+    if (!fileUrl) {
       return NextResponse.json(
-        { error: 'No file provided' },
+        { error: 'No file URL provided' },
         { status: 400 }
       );
     }
 
-    if (file.type !== 'application/pdf') {
+    // Fetch the PDF file from the UploadThing URL
+    const response = await fetch(fileUrl);
+    
+    if (!response.ok) {
       return NextResponse.json(
-        { error: 'File must be a PDF' },
+        { error: 'Failed to fetch PDF file' },
         { status: 400 }
       );
     }
 
-    // Convert file to buffer
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    // Convert response to buffer
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
     // Extract text from PDF
     const pdfText = await extractTextFromPDF(buffer);
