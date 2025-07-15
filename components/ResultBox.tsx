@@ -46,13 +46,48 @@ export default function ResultBox({ analysis, isLoading, error }: ResultBoxProps
     return null;
   }
 
+  const renderContent = (content: any): string => {
+    if (typeof content === 'string') {
+      return content;
+    }
+    if (Array.isArray(content)) {
+      return content.join('\n• ');
+    }
+    if (typeof content === 'object') {
+      return Object.entries(content)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join('\n');
+    }
+    return String(content);
+  };
+
   const sections = [
     { title: 'Parties Involved', content: analysis.partiesInvolved, icon: '👥' },
-    { title: 'Lease Duration', content: analysis.leaseDuration, icon: '📅' },
-    { title: 'Rent & Payment Terms', content: analysis.rentAndPaymentTerms, icon: '💰' },
-    { title: 'Termination Clause', content: analysis.terminationClause, icon: '🚪' },
-    { title: 'Security Deposit', content: analysis.securityDeposit, icon: '🔒' },
-    { title: 'Risks & Red Flags', content: analysis.risksAndRedFlags, icon: '⚠️' },
+    { 
+      title: 'Lease Duration', 
+      content: `Start Date: ${analysis.leaseDuration.startDate}\nEnd Date: ${analysis.leaseDuration.endDate}\nRenewal Terms: ${analysis.leaseDuration.renewalTerms}`, 
+      icon: '📅' 
+    },
+    { 
+      title: 'Rent & Payment Terms', 
+      content: `Monthly Rent: ${analysis.rentAndPaymentTerms.monthlyRentAmount}\nDue Date: ${analysis.rentAndPaymentTerms.dueDate}\nLate Fees: ${analysis.rentAndPaymentTerms.lateFees}\nPayment Methods: ${analysis.rentAndPaymentTerms.paymentMethods}`, 
+      icon: '💰' 
+    },
+    { 
+      title: 'Termination Clause', 
+      content: `Conditions: ${analysis.terminationClause.conditionsForEarlyTermination}\nNotice Requirements: ${analysis.terminationClause.noticeRequirements}`, 
+      icon: '🚪' 
+    },
+    { 
+      title: 'Security Deposit', 
+      content: `Amount: ${analysis.securityDeposit.amount}\nReturn Conditions: ${analysis.securityDeposit.conditionsForReturn}\nDeductions: ${analysis.securityDeposit.deductions}`, 
+      icon: '🔒' 
+    },
+    { 
+      title: 'Risks & Red Flags', 
+      content: `Concerning Clauses:\n• ${analysis.risksAndRedFlags.concerningClauses.join('\n• ')}\n\nUnusual Terms:\n• ${analysis.risksAndRedFlags.unusualTerms.join('\n• ')}\n\nPotential Issues:\n• ${analysis.risksAndRedFlags.potentialIssues.join('\n• ')}`, 
+      icon: '⚠️' 
+    },
   ];
 
   return (
@@ -66,7 +101,7 @@ export default function ResultBox({ analysis, isLoading, error }: ResultBoxProps
                 <span className="text-2xl mr-2">{section.icon}</span>
                 <h3 className="text-lg font-semibold text-gray-900">{section.title}</h3>
               </div>
-              <p className="text-gray-700 leading-relaxed">{section.content}</p>
+              <div className="text-gray-700 leading-relaxed whitespace-pre-line">{section.content}</div>
             </div>
           ))}
         </div>
