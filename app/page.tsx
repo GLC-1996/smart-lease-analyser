@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import UploadBox from '@/components/UploadBox';
 import ResultBox from '@/components/ResultBox';
-import { LeaseAnalysis } from '@/lib/openai';
+import { LeaseFullAnalysis } from '@/lib/openai';
 
 export default function Home() {
-  const [analysis, setAnalysis] = useState<LeaseAnalysis | null>(null);
+  const [analysis, setAnalysis] = useState<LeaseFullAnalysis | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,7 +45,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -53,7 +53,7 @@ export default function Home() {
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Upload your rental agreement PDF and get an AI-powered analysis of key clauses, 
-            terms, and potential red flags.
+            terms, and legal advice with suggested improvements.
           </p>
         </div>
 
