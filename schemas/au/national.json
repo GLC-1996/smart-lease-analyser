@@ -1,0 +1,53 @@
+{
+  "lawSummary": "Australian lease law is governed by state and territory legislation, with common law principles. Key acts include Residential Tenancies Acts in each state, which provide statutory protections for tenants and landlords. The law emphasizes fairness, habitability, and procedural protections.",
+  "requiredClauses": [
+    {
+      "title": "Termination and Notice",
+      "legalBasis": "State Residential Tenancies Acts",
+      "riskIndicators": ["unreasonable notice periods", "no grounds for termination", "retaliatory eviction"],
+      "draftingHints": "Follow state-specific notice requirements (typically 14-90 days). Must specify valid grounds for termination. Cannot include retaliatory eviction clauses."
+    },
+    {
+      "title": "Bond and Security",
+      "legalBasis": "State Bond Laws",
+      "riskIndicators": ["excessive bond", "no bond lodgment", "unclear return process"],
+      "draftingHints": "Bond must be lodged with state authority. Follow state limits (typically 4 weeks rent). Specify return process and dispute resolution."
+    },
+    {
+      "title": "Rent and Payment",
+      "legalBasis": "State Residential Tenancies Acts",
+      "riskIndicators": ["excessive rent increases", "unreasonable payment terms", "no rent control"],
+      "draftingHints": "Rent increases must be reasonable and follow state guidelines. Specify payment methods and due dates. Include rent control provisions if applicable."
+    },
+    {
+      "title": "Repairs and Maintenance",
+      "legalBasis": "State Residential Tenancies Acts",
+      "riskIndicators": ["tenant pays for major repairs", "no urgent repair process", "unclear responsibilities"],
+      "draftingHints": "Landlord responsible for major repairs. Include urgent repair process. Clearly define tenant's limited maintenance responsibilities."
+    },
+    {
+      "title": "Privacy and Entry",
+      "legalBasis": "State Privacy Laws",
+      "riskIndicators": ["unlimited entry", "no notice requirements", "unreasonable access"],
+      "draftingHints": "Specify notice requirements (typically 7-14 days). Limit entry to reasonable purposes. Respect tenant privacy rights."
+    },
+    {
+      "title": "Sub-letting",
+      "legalBasis": "State Residential Tenancies Acts",
+      "riskIndicators": ["absolute prohibition", "unreasonable restrictions", "excessive fees"],
+      "draftingHints": "Cannot unreasonably withhold consent. Include reasonable approval process. Cannot charge excessive fees for consent."
+    },
+    {
+      "title": "Utilities and Services",
+      "legalBasis": "State Utility Laws",
+      "riskIndicators": ["unclear responsibility", "excessive charges", "no service standards"],
+      "draftingHints": "Clearly specify utility responsibilities. Cannot charge excessive fees. Include service standards and complaint procedures."
+    },
+    {
+      "title": "Dispute Resolution",
+      "legalBasis": "State Tribunal Systems",
+      "riskIndicators": ["no dispute mechanism", "unreasonable jurisdiction", "no tribunal access"],
+      "draftingHints": "Include access to state tribunal system. Specify dispute resolution process. Cannot waive tribunal rights."
+    }
+  ]
+} 

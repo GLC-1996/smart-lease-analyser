@@ -1,0 +1,53 @@
+{
+  "lawSummary": "US lease law is primarily governed by state law, with federal protections under the Fair Housing Act and Americans with Disabilities Act. Common law principles and state-specific landlord-tenant statutes apply. Key protections include habitability requirements, anti-discrimination laws, and procedural requirements for eviction.",
+  "requiredClauses": [
+    {
+      "title": "Termination and Eviction",
+      "legalBasis": "State Landlord-Tenant Acts, Fair Housing Act",
+      "riskIndicators": ["self-help eviction", "no notice requirements", "retaliatory eviction"],
+      "draftingHints": "Must follow state-specific notice requirements (typically 3-30 days). Cannot include self-help eviction. Must provide proper notice and court process."
+    },
+    {
+      "title": "Security Deposit",
+      "legalBasis": "State Security Deposit Laws",
+      "riskIndicators": ["excessive deposit", "no itemized deductions", "no return timeline"],
+      "draftingHints": "Follow state limits (typically 1-2 months rent). Provide itemized deductions within state timeline (usually 14-30 days). Include interest requirements if applicable."
+    },
+    {
+      "title": "Habitability and Repairs",
+      "legalBasis": "Implied Warranty of Habitability",
+      "riskIndicators": ["tenant pays for major repairs", "no habitability standards", "waiver of landlord obligations"],
+      "draftingHints": "Landlord must maintain habitability. Cannot waive landlord's repair obligations. Specify tenant's limited repair responsibilities."
+    },
+    {
+      "title": "Rent Payment",
+      "legalBasis": "State Landlord-Tenant Acts",
+      "riskIndicators": ["excessive late fees", "no grace period", "unreasonable payment methods"],
+      "draftingHints": "Late fees must be reasonable (typically 5-10% of rent). Include grace period. Accept multiple payment methods."
+    },
+    {
+      "title": "Fair Housing Compliance",
+      "legalBasis": "Fair Housing Act, Americans with Disabilities Act",
+      "riskIndicators": ["discriminatory terms", "no reasonable accommodation", "restrictive occupancy"],
+      "draftingHints": "Cannot discriminate based on protected classes. Must allow reasonable accommodations for disabilities. Occupancy limits must be reasonable."
+    },
+    {
+      "title": "Entry and Privacy",
+      "legalBasis": "State Privacy Laws",
+      "riskIndicators": ["unlimited entry", "no notice requirement", "unreasonable access"],
+      "draftingHints": "Specify notice requirements (typically 24-48 hours). Limit entry to reasonable purposes. Respect tenant privacy rights."
+    },
+    {
+      "title": "Sub-leasing and Assignment",
+      "legalBasis": "State Landlord-Tenant Acts",
+      "riskIndicators": ["absolute prohibition", "unreasonable restrictions", "no consent process"],
+      "draftingHints": "Cannot unreasonably withhold consent to sub-lease. Include reasonable approval process. Cannot charge excessive fees."
+    },
+    {
+      "title": "Utilities and Services",
+      "legalBasis": "State Landlord-Tenant Acts",
+      "riskIndicators": ["unclear responsibility", "excessive charges", "no service standards"],
+      "draftingHints": "Clearly specify utility responsibilities. Cannot charge excessive fees. Include service standards and complaint procedures."
+    }
+  ]
+} 

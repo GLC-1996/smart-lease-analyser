@@ -1,33 +1,58 @@
-import OpenAI from 'openai';
-import { LeaseFullAnalysis } from './types/lease';
-import { createLeaseAnalysisPrompt, parseOpenAIResponse } from './utils/prompts';
+import { LeaseFullAnalysis, LeaseAnalysisResponse } from './types/lease';
+import { analyzeLease as coreAnalyzeLease } from './core/analyzeLease';
+import { createLeaseAnalysisPrompt } from './utils/prompts';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Export types for backward compatibility
+export type { LeaseFullAnalysis, LeaseAnalysisResponse };
 
-export type { LeaseFullAnalysis };
-
+// Legacy function for backward compatibility
 export async function analyzeLease(pdfText: string): Promise<LeaseFullAnalysis> {
   try {
-    const messages = createLeaseAnalysisPrompt(pdfText);
-
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4-turbo",
-      messages,
-      temperature: 0.3,
-    });
-
-    const response = completion.choices[0]?.message?.content;
-    if (!response) {
-      throw new Error('No response from OpenAI');
-    }
+    // Use default jurisdiction (India) for backward compatibility
+    const prompt = await createLeaseAnalysisPrompt(pdfText, 'in');
+    const response = await coreAnalyzeLease(prompt);
     
-    console.log("raw output", response);
-    return parseOpenAIResponse(response);
-    
+    // Convert new response format to legacy format
+    return convertToLegacyFormat(response);
   } catch (error) {
-    console.error('Error calling OpenAI:', error);
+    console.error('Error in legacy analyzeLease:', error);
     throw new Error('Failed to analyze lease with AI');
   }
+}
+
+// New jurisdiction-aware function
+export async function analyzeLeaseWithJurisdiction(
+  pdfText: string,
+  countryCode: string,
+  stateCode?: string
+): Promise<LeaseAnalysisResponse> {
+  try {
+    const prompt = await createLeaseAnalysisPrompt(pdfText, countryCode, stateCode);
+    return await coreAnalyzeLease(prompt);
+  } catch (error) {
+    console.error('Error in jurisdiction-aware analyzeLease:', error);
+    throw new Error('Failed to analyze lease with AI');
+  }
+}
+
+// Helper function to convert new format to legacy format
+function convertToLegacyFormat(response: LeaseAnalysisResponse): LeaseFullAnalysis {
+  return {
+    facts: {
+      partiesInvolved: response.metadata.partiesInvolved,
+      rentAndPaymentTerms: response.metadata.rentAndPaymentTerms,
+      securityDeposit: response.metadata.securityDeposit
+    },
+    advice: {
+      missingClauses: response.missingClauses.map(clause => clause.title),
+      riskyClauses: response.clauses
+        .filter(clause => clause.riskLevel === 'high' || clause.riskLevel === 'medium')
+        .map(clause => clause.title),
+      suggestedClauses: response.missingClauses.map(clause => ({
+        title: clause.title,
+        draft: clause.draft
+      })),
+      legalReferences: response.clauses.map(clause => clause.legalBasis)
+    }
+  };
 } 

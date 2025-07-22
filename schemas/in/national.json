@@ -1,0 +1,53 @@
+{
+  "lawSummary": "Transfer of Property Act, 1882 governs lease contracts in India. The Act defines lease as a transfer of a right to enjoy immovable property for a certain time. Key sections include Section 105 (definition), Section 106 (duration), Section 107 (mode of transfer), Section 111 (termination), and Section 108 (rights and liabilities).",
+  "requiredClauses": [
+    {
+      "title": "Termination Clause",
+      "legalBasis": "Section 111, Transfer of Property Act, 1882",
+      "riskIndicators": ["unilateral termination", "no notice period", "unreasonable termination conditions"],
+      "draftingHints": "Both parties should be allowed to terminate with mutual notice. Notice period should be reasonable (typically 15-30 days). Include specific conditions for termination."
+    },
+    {
+      "title": "Force Majeure",
+      "legalBasis": "Contract Law Principle, Section 56 of Indian Contract Act",
+      "riskIndicators": ["no disaster clause", "acts of god not covered", "no pandemic provisions"],
+      "draftingHints": "Include events like fire, flood, pandemic, natural disasters, and their effect on rent obligations. Should provide relief to both parties."
+    },
+    {
+      "title": "Security Deposit",
+      "legalBasis": "Section 108, Transfer of Property Act",
+      "riskIndicators": ["excessive deposit", "no return timeline", "unclear deduction terms"],
+      "draftingHints": "Deposit should be reasonable (typically 1-3 months rent). Specify return timeline (usually 7-30 days). List specific deduction conditions."
+    },
+    {
+      "title": "Rent Payment Terms",
+      "legalBasis": "Section 108, Transfer of Property Act",
+      "riskIndicators": ["unclear due date", "excessive late fees", "no grace period"],
+      "draftingHints": "Specify exact due date, reasonable late fees (not exceeding 5-10% of rent), and grace period. Include payment methods."
+    },
+    {
+      "title": "Maintenance and Repairs",
+      "legalBasis": "Section 108, Transfer of Property Act",
+      "riskIndicators": ["unclear responsibility", "excessive tenant obligations", "no landlord maintenance"],
+      "draftingHints": "Clearly define who is responsible for what repairs. Major structural repairs are landlord's responsibility. Minor repairs can be tenant's responsibility."
+    },
+    {
+      "title": "Sub-letting and Assignment",
+      "legalBasis": "Section 108, Transfer of Property Act",
+      "riskIndicators": ["absolute prohibition", "no landlord consent process", "unreasonable restrictions"],
+      "draftingHints": "Should allow sub-letting with landlord's written consent, which cannot be unreasonably withheld. Include process for seeking consent."
+    },
+    {
+      "title": "Utilities and Services",
+      "legalBasis": "Contract Law Principle",
+      "riskIndicators": ["unclear responsibility", "no service standards", "excessive charges"],
+      "draftingHints": "Specify who pays for utilities, maintenance charges, and services. Include service standards and complaint procedures."
+    },
+    {
+      "title": "Dispute Resolution",
+      "legalBasis": "Arbitration and Conciliation Act, 1996",
+      "riskIndicators": ["no dispute mechanism", "unreasonable jurisdiction", "no mediation option"],
+      "draftingHints": "Include mediation, arbitration, or court jurisdiction. Specify governing law and dispute resolution process."
+    }
+  ]
+} 
