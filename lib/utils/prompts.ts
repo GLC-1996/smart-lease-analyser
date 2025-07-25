@@ -47,6 +47,7 @@ Analyze each required clause and provide:
 3. Risk level (low/medium/high) based on compliance with legal requirements
 4. Specific suggestions for improvement
 5. Missing clauses that should be added
+6. For existing clauses with medium or high risk levels, provide an improved draft version
 
 Respond in JSON format:
 {
@@ -56,7 +57,8 @@ Respond in JSON format:
       "text": "Actual clause text from lease",
       "riskLevel": "low|medium|high",
       "suggestions": ["suggestion1", "suggestion2"],
-      "legalBasis": "Legal basis for this clause"
+      "legalBasis": "Legal basis for this clause",
+      "draft": "AI-generated improved version of the clause (only if risk level is medium or high)"
     }
   ],
   "missingClauses": [
@@ -148,7 +150,8 @@ Please provide a JSON response with the following structure:
       "text": "Actual clause text",
       "riskLevel": "low|medium|high",
       "suggestions": ["suggestion1", "suggestion2"],
-      "legalBasis": "Legal basis"
+      "legalBasis": "Legal basis",
+      "draft": "AI-generated improved version of the clause (only if risk level is medium or high)"
     }
   ],
   "missingClauses": [
@@ -219,4 +222,4 @@ export function parseOpenAIResponse(response: string) {
     console.warn("Failed to parse JSON from response:", response);
     return createFallbackAnalysis();
   }
-} 
+}

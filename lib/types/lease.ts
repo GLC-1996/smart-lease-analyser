@@ -26,6 +26,7 @@ export interface ClauseWithAdvice {
   riskLevel: 'low' | 'medium' | 'high';
   suggestions: string[];
   legalBasis: string;
+  draft?: string; // Suggested improved version of the clause
 }
 
 export interface SuggestedClause {

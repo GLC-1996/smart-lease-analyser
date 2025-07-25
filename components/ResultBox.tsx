@@ -152,6 +152,18 @@ export default function ResultBox({ analysis, isLoading, error }: ResultBoxProps
                       </ul>
                     </div>
                   )}
+                  {clause.draft && (
+                    <div className="flex items-center justify-between">
+                      <h5 className="text-sm font-medium text-gray-700">Improved Draft:</h5>
+                      <button
+                        onClick={() => handleClauseClick({ title: clause.title, draft: clause.draft! })}
+                        className="text-2xl hover:scale-110 transition-transform ml-2"
+                        title="View improved draft"
+                      >
+                        ✨
+                      </button>
+                    </div>
+                  )}
                 </div>
               </Accordion>
             ))}
@@ -196,7 +208,7 @@ export default function ResultBox({ analysis, isLoading, error }: ResultBoxProps
             setIsModalOpen(false);
             setSelectedClause(null);
           }}
-          title={selectedClause?.title || 'Clause Draft'}
+          title={selectedClause?.title ? `${selectedClause.title} - Suggested Draft` : 'Clause Draft'}
         >
           {selectedClause && (
             <div className="space-y-4">
