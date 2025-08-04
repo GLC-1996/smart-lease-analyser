@@ -5,6 +5,9 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// ============================================================================
+// MAIN LOGIC: Core OpenAI API call for lease analysis
+// ============================================================================
 export async function analyzeLease(prompt: string): Promise<LeaseAnalysisResponse> {
   try {
     const completion = await openai.chat.completions.create({
@@ -36,6 +39,9 @@ export async function analyzeLease(prompt: string): Promise<LeaseAnalysisRespons
   }
 }
 
+// ============================================================================
+// FALLBACK LOGIC: JSON parsing with error handling
+// ============================================================================
 function parseOpenAIResponse(response: string): LeaseAnalysisResponse {
   try {
     const jsonStart = response.indexOf("{");
@@ -45,10 +51,14 @@ function parseOpenAIResponse(response: string): LeaseAnalysisResponse {
     return JSON.parse(jsonString) as LeaseAnalysisResponse;
   } catch (parseError) {
     console.warn("Failed to parse JSON from response:", response);
+    // FALLBACK: Return fallback analysis if JSON parsing fails
     return createFallbackAnalysis();
   }
 }
 
+// ============================================================================
+// FALLBACK LOGIC: Default response when analysis fails
+// ============================================================================
 function createFallbackAnalysis(): LeaseAnalysisResponse {
   return {
     clauses: [

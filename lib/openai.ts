@@ -5,7 +5,9 @@ import { createLeaseAnalysisPrompt } from './utils/prompts';
 // Export types for backward compatibility
 export type { LeaseFullAnalysis, LeaseAnalysisResponse };
 
-// Legacy function for backward compatibility
+// ============================================================================
+// FALLBACK LOGIC: Legacy function for backward compatibility
+// ============================================================================
 export async function analyzeLease(pdfText: string): Promise<LeaseFullAnalysis> {
   try {
     // Use default jurisdiction (India) for backward compatibility
@@ -20,7 +22,9 @@ export async function analyzeLease(pdfText: string): Promise<LeaseFullAnalysis> 
   }
 }
 
-// New jurisdiction-aware function
+// ============================================================================
+// MAIN LOGIC: New jurisdiction-aware function
+// ============================================================================
 export async function analyzeLeaseWithJurisdiction(
   pdfText: string,
   countryCode: string,
@@ -35,7 +39,9 @@ export async function analyzeLeaseWithJurisdiction(
   }
 }
 
-// Helper function to convert new format to legacy format
+// ============================================================================
+// FALLBACK LOGIC: Helper function to convert new format to legacy format
+// ============================================================================
 function convertToLegacyFormat(response: LeaseAnalysisResponse): LeaseFullAnalysis {
   return {
     facts: {

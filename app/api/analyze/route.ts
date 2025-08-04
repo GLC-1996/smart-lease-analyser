@@ -3,6 +3,9 @@ import { extractTextFromPDF } from '@/lib/pdfParser';
 import { analyzeLeaseWithJurisdiction } from '@/lib/openai';
 import { cache } from '@/lib/utils/cache';
 
+// ============================================================================
+// MAIN LOGIC: API route for lease analysis with caching and jurisdiction support
+// ============================================================================
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -58,6 +61,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(analysis);
   } catch (error) {
     console.error('Error in analyze route:', error);
+    // FALLBACK: Return error response if analysis fails
     return NextResponse.json(
       { error: 'Failed to analyze lease agreement' },
       { status: 500 }

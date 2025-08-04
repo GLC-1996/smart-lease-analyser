@@ -1,3 +1,6 @@
+// ============================================================================
+// FALLBACK LOGIC: Legacy types for backward compatibility
+// ============================================================================
 export interface LeaseFullAnalysis {
   facts: {
     partiesInvolved: string;
@@ -19,7 +22,9 @@ export interface LeaseFullAnalysis {
   };
 }
 
-// New jurisdiction-aware types
+// ============================================================================
+// MAIN LOGIC: New jurisdiction-aware types for enhanced analysis
+// ============================================================================
 export interface ClauseWithAdvice {
   title: string;
   text: string;
@@ -60,7 +65,9 @@ export interface LeaseAnalysisResponse {
   metadata: LeaseMetadata;
 }
 
-// Schema types for jurisdiction-specific legal requirements
+// ============================================================================
+// MAIN LOGIC: Schema types for jurisdiction-specific legal requirements
+// ============================================================================
 export interface RequiredClause {
   title: string;
   legalBasis: string;

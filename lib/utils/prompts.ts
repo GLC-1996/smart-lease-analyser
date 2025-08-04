@@ -11,6 +11,9 @@ const schemas: Record<string, LegalSchema> = {
   'au': auSchema as LegalSchema,
 };
 
+// ============================================================================
+// MAIN LOGIC: Primary prompt generation with jurisdiction-aware analysis
+// ============================================================================
 export async function createLeaseAnalysisPrompt(
   leaseText: string,
   countryCode: string,
@@ -91,11 +94,14 @@ Respond in JSON format:
     return prompt;
   } catch (error) {
     console.error('Error creating lease analysis prompt:', error);
-    // Fallback to a generic prompt if schema loading fails
+    // FALLBACK: Use generic prompt if schema loading fails
     return createGenericPrompt(leaseText);
   }
 }
 
+// ============================================================================
+// MAIN LOGIC: Schema loading with jurisdiction support
+// ============================================================================
 function loadLegalSchema(countryCode: string, stateCode?: string): LegalSchema {
   try {
     // For now, we only have national schemas
@@ -104,16 +110,21 @@ function loadLegalSchema(countryCode: string, stateCode?: string): LegalSchema {
     
     if (!schema) {
       console.warn(`No schema found for ${countryCode}, using default`);
+      // FALLBACK: Return default schema if country not found
       return getDefaultSchema();
     }
     
     return schema;
   } catch (error) {
     console.error(`Failed to load schema for ${countryCode}, using default`);
+    // FALLBACK: Return default schema if loading fails
     return getDefaultSchema();
   }
 }
 
+// ============================================================================
+// FALLBACK LOGIC: Default schema when jurisdiction-specific schema is unavailable
+// ============================================================================
 function getDefaultSchema(): LegalSchema {
   return {
     lawSummary: "General contract law principles apply to lease agreements. Key considerations include fairness, clarity, and compliance with local regulations.",
@@ -134,6 +145,9 @@ function getDefaultSchema(): LegalSchema {
   };
 }
 
+// ============================================================================
+// FALLBACK LOGIC: Generic prompt when jurisdiction-aware prompt fails
+// ============================================================================
 function createGenericPrompt(leaseText: string): string {
   return `You are a legal assistant specializing in lease agreement analysis.
 
@@ -182,7 +196,9 @@ Please provide a JSON response with the following structure:
 }`;
 }
 
-// Keep the old functions for backward compatibility
+// ============================================================================
+// FALLBACK LOGIC: Legacy functions for backward compatibility
+// ============================================================================
 export function createFallbackAnalysis() {
   return {
     facts: {
@@ -211,6 +227,9 @@ export function createFallbackAnalysis() {
   };
 }
 
+// ============================================================================
+// FALLBACK LOGIC: JSON parsing with error handling
+// ============================================================================
 export function parseOpenAIResponse(response: string) {
   try {
     const jsonStart = response.indexOf("{");
@@ -220,6 +239,7 @@ export function parseOpenAIResponse(response: string) {
     return JSON.parse(jsonString);
   } catch (parseError) {
     console.warn("Failed to parse JSON from response:", response);
+    // FALLBACK: Return fallback analysis if JSON parsing fails
     return createFallbackAnalysis();
   }
 }
